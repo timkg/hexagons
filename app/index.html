@@ -31,6 +31,7 @@
         <!-- endbuild -->
 
         <!-- build:js({app,.tmp}) scripts/main.js -->
+        <script src="scripts/hex.js"></script>
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
 
@@ -39,61 +40,11 @@
         <svg id="one" width="300" height="300">
         </svg>
         <script type="text/javascript">
-
-            // http://www.redblobgames.com/grids/hexagons/
-            // to draw a hexagon, we need a center pos (x, y) and size (distance from center to corner)
-            // for each corner i
-            // xi = x + size * cos(angle)
-            // yi = y + size * sin(angle)
-            // angle = 2 * PI / 6 * i
-            function hex(x, y, size, snap) {
-                var points = [];
-                for (var i = 0; i < 6; i++) {
-                    var angle = 2 * Math.PI / 6 * i;
-                    xi = x + size * Math.cos(angle);
-                    yi = y + size * Math.sin(angle);
-                    points.push(xi);
-                    points.push(yi);
-                }
-            
-                return snap.polygon(points).attr('class', 'hexagon');
-            }
-
-            function hexAtCoordinates (x0, y0, q, r) {
-                var hexPos = position(x0, y0, size, q, r);
-                hex(hexPos.x, hexPos.y, size, s1);
-            }
-
             var s1 = Snap('#one');
-            
-            var size = 20;
+            var hexSize = 20;
             var centerX = centerY = 150;
-            
-            
-            hexGrid(centerX, centerY, 3);
 
-            function hexGrid (x0, y0, size) {    
-                for (var q = -size; q <= size; q++) {
-                    for (var r = -size; r <= size; r++) {
-                        var z = -q-r;
-                        if (Math.abs(q) <= size && Math.abs(r) <= size && Math.abs(z) <= size) {
-                            hexAtCoordinates(x0, y0, q, r)
-                        }
-                    }
-                }
-            }
-            
-            function position (x0, y0, size, q, r) {
-                var deltaX, deltaY;
-
-                deltaX = size * 3/2 * q;
-                deltaY = size * Math.sqrt(3) * (r + q/2);
-
-                return {
-                    x: x0 + deltaX,
-                    y: y0 + deltaY
-                };
-            }
+            var grid = new HexGrid(centerX, centerY, hexSize, 3, s1);
         </script>
 </body>
 </html>
