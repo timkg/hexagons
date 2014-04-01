@@ -72,7 +72,38 @@
             var centerX = centerY = 150;
             var hex00 = hex(150, 150, size, s2);
             var hex10 = hex(150 + width * 0.75, 150 + height/2, size, s2);
+        </script>
 
+        <svg id="three" width="300" height="300">
+        </svg>
+        <script type="text/javascript">
+            var s3 = Snap('#three');
+            
+            var size = 50;
+            var width = size * 2;
+            var height = Math.sqrt(3)/2 * width;
+
+            var centerX = centerY = 150;
+            var hex00 = hex(150, 150, size, s3);
+
+            var coordinateMap = {
+                'n': '0,-1',
+                'ne': '1,-1',
+                'se': '1,0',
+                's': '0,1',
+                'sw': '-1,1',
+                'nw': '-1,0'
+            };
+
+            function positionSouthEast (x0, y0, w, h) {
+                return {
+                    x: x0 + w * 0.75,
+                    y: y0 + h/2
+                };
+            }
+
+            var hex10Position = positionSouthEast(150, 150, width, height);
+            var hex10 = hex(hex10Position.x, hex10Position.y, size, s3);
         </script>
 </body>
 </html>
