@@ -16,14 +16,11 @@ function HexGrid (x0, y0, hexSize, size, snap) {
 }
 
 HexGrid.prototype.addHex = function (q, r) {
-    this.hexes[q + ',' + r] = this.hexAtCoordinates(q, r);
-};
-
-HexGrid.prototype.hexAtCoordinates = function (q, r) {
     var hexPos = this.position(q, r);
     var hex = new Hex(hexPos.x, hexPos.y, this.hexSize, this.snap, this);
+    this.hexes[q + ',' + r] = hex;
     hex.draw();
-}
+};
 
 HexGrid.prototype.position = function (q, r) {
     var deltaX, deltaY;
