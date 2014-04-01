@@ -145,45 +145,50 @@
         <script type="text/javascript">
             var s4 = Snap('#four');
             
-            var size = 50;
+            var size = 20;
             var centerX = centerY = 150;
             
-            hexGrid(centerX, centerY, size);
+            hexGrid(centerX, centerY, size, 2);
 
-            function hexGrid (x0, y0, size) {
+            function hexGrid (x0, y0, size, depth) {
                 var center = hex(x0, y0, size, s4);
                 var coordinates = ['n', 'ne', 'se', 's', 'sw', 'nw'];
 
                 var width = size * 2;
                 var height = Math.sqrt(3)/2 * width;
 
-                coordinates.forEach(function (coordinate) {
-                    var hexPos = position(coordinate, x0, y0, width, height);
-                    hex(hexPos.x, hexPos.y, size, s4);
-                });
+                for (var i = 1; i <= depth; i++) {
+                    coordinates.forEach(function (coordinate) {
+                        var hexPos = position(coordinate, x0, y0, width, height, i);
+                        hex(hexPos.x, hexPos.y, size, s4);
+                    });    
+                }
+                
             }
 
-            function position (coordinate, x0, y0, w, h) {
-                var x, y;
+            function position (coordinate, x0, y0, w, h, distanceFromCenter) {
+                var deltaX, deltaY;
 
                 switch (coordinate) {
-                    case 'se': x = x0 + w * 0.75; y = y0 + h * 0.5;
+                    case 'se':  deltaX = w * 0.75;  deltaY = h * 0.5;
                     break;
-                    case 's': x = x0; y = y0 + h;
+                    case 's':   deltaX = 0;         deltaY = h;
                     break;
-                    case 'sw': x = x0 - w * 0.75; y = y0 + h * 0.5;
+                    case 'sw':  deltaX = w * -0.75; deltaY = h * 0.5;
                     break;
-                    case 'nw': x = x0 - w * 0.75; y = y0 - h * 0.5;
+                    case 'nw':  deltaX = w * -0.75; deltaY = h * -0.5;
                     break;
-                    case 'n': x = x0; y = y0 - h;
+                    case 'n':   deltaX = 0;         deltaY = h * -1;
                     break;
-                    case 'ne': x = x0 + w * 0.75; y = y0 - h * 0.5;
+                    case 'ne':  deltaX = w * 0.75;  deltaY = h * -0.5;
                     break;
                 }
 
+
+
                 return {
-                    x: x,
-                    y: y
+                    x: x0 + deltaX * distanceFromCenter,
+                    y: y0 + deltaY * distanceFromCenter
                 };
             }
         </script>
