@@ -111,6 +111,8 @@
                     break;
                     case 'n': x = x0; y = y0 - h;
                     break;
+                    case 'ne': x = x0 + w * 0.75; y = y0 - h * 0.5;
+                    break;
                 }
 
                 return {
@@ -133,6 +135,9 @@
 
             var hexNPos = position('n', 150, 150, width, height);
             var hexN = hex(hexNPos.x, hexNPos.y, size, s3);
+
+            var hexNEPos = position('ne', 150, 150, width, height);
+            var hexNE = hex(hexNEPos.x, hexNEPos.y, size, s3);
         </script>
 </body>
 </html>
