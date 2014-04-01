@@ -109,6 +109,8 @@
                     break;
                     case 'nw': x = x0 - w * 0.75; y = y0 - h * 0.5;
                     break;
+                    case 'n': x = x0; y = y0 - h;
+                    break;
                 }
 
                 return {
@@ -128,6 +130,9 @@
 
             var hexNWPos = position('nw', 150, 150, width, height);
             var hexNW = hex(hexNWPos.x, hexNWPos.y, size, s3);
+
+            var hexNPos = position('n', 150, 150, width, height);
+            var hexN = hex(hexNPos.x, hexNPos.y, size, s3);
         </script>
 </body>
 </html>
