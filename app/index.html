@@ -105,6 +105,8 @@
                     break;
                     case 's': x = x0; y = y0 + h;
                     break;
+                    case 'sw': x = x0 - w * 0.75; y = y0 + h * 0.5;
+                    break;
                 }
 
                 return {
@@ -118,6 +120,9 @@
 
             var hexSPos = position('s', 150, 150, width, height);
             var hexS = hex(hexSPos.x, hexSPos.y, size, s3);
+
+            var hexSWPos = position('sw', 150, 150, width, height);
+            var hexSW = hex(hexSWPos.x, hexSWPos.y, size, s3);
         </script>
 </body>
 </html>
