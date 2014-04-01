@@ -139,5 +139,53 @@
             var hexNEPos = position('ne', 150, 150, width, height);
             var hexNE = hex(hexNEPos.x, hexNEPos.y, size, s3);
         </script>
+
+        <svg id="four" width="300" height="300">
+        </svg>
+        <script type="text/javascript">
+            var s4 = Snap('#four');
+            
+            var size = 50;
+            var centerX = centerY = 150;
+            
+            hexGrid(centerX, centerY, size);
+
+            function hexGrid (x0, y0, size) {
+                var center = hex(x0, y0, size, s4);
+                var coordinates = ['n', 'ne', 'se', 's', 'sw', 'nw'];
+
+                var width = size * 2;
+                var height = Math.sqrt(3)/2 * width;
+
+                coordinates.forEach(function (coordinate) {
+                    var hexPos = position(coordinate, x0, y0, width, height);
+                    hex(hexPos.x, hexPos.y, size, s4);
+                });
+            }
+
+            function position (coordinate, x0, y0, w, h) {
+                var x, y;
+
+                switch (coordinate) {
+                    case 'se': x = x0 + w * 0.75; y = y0 + h * 0.5;
+                    break;
+                    case 's': x = x0; y = y0 + h;
+                    break;
+                    case 'sw': x = x0 - w * 0.75; y = y0 + h * 0.5;
+                    break;
+                    case 'nw': x = x0 - w * 0.75; y = y0 - h * 0.5;
+                    break;
+                    case 'n': x = x0; y = y0 - h;
+                    break;
+                    case 'ne': x = x0 + w * 0.75; y = y0 - h * 0.5;
+                    break;
+                }
+
+                return {
+                    x: x,
+                    y: y
+                };
+            }
+        </script>
 </body>
 </html>
