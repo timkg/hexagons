@@ -43,19 +43,21 @@
             // xi = x + size * cos(angle)
             // yi = y + size * sin(angle)
             // angle = 2 * PI / 6 * i
-            var size = 100, x = 150, y = 150;
-            var pointString = '';
-            var points = [];
-            for (var i = 0; i < 6; i++) {
-                var angle = 2 * Math.PI / 6 * i;
-                xi = x + size * Math.cos(angle);
-                yi = y + size * Math.sin(angle);
-                pointString += xi + ',' + yi + ' ';
-                points.push(xi);
-                points.push(yi);
+            function hex(x, y, size, snap) {
+                var points = [];
+                for (var i = 0; i < 6; i++) {
+                    var angle = 2 * Math.PI / 6 * i;
+                    xi = x + size * Math.cos(angle);
+                    yi = y + size * Math.sin(angle);
+                    points.push(xi);
+                    points.push(yi);
+                }
+            
+                return snap.polygon(points).attr('class', 'hexagon');
             }
+
             var s = Snap('#one');
-            var hex = s.polygon(points).attr('class', 'hexagon');
+            hex(150, 150, 100, s);
         </script>
 </body>
 </html>
