@@ -87,22 +87,35 @@
             var hex00 = hex(150, 150, size, s3);
 
             var coordinateMap = {
-                'n': '0,-1',
-                'ne': '1,-1',
-                'se': '1,0',
-                's': '0,1',
-                'sw': '-1,1',
-                'nw': '-1,0'
+                'n': [0,-1],
+                'ne': [1,-1],
+                'se': [1,0],
+                's': [0,1],
+                'sw': [-1,1],
+                'nw': [-1,0]
             };
 
-            function positionSouthEast (x0, y0, w, h) {
+            function position (coordinate, x0, y0, w, h) {
+                var coordinateSign = coordinateMap[coordinate];
+                var x, y;
+                
+                switch (coordinateSign[0]) {
+                    case 1: x = x0 + w * 0.75;
+                    break;
+                }
+
+                switch (coordinateSign[1]) {
+                    case 0: y = y0 + h * 0.5;
+                    break;
+                }
+
                 return {
-                    x: x0 + w * 0.75,
-                    y: y0 + h/2
+                    x: x,
+                    y: y
                 };
             }
 
-            var hex10Position = positionSouthEast(150, 150, width, height);
+            var hex10Position = position('se', 150, 150, width, height);
             var hex10 = hex(hex10Position.x, hex10Position.y, size, s3);
         </script>
 </body>
