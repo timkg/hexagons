@@ -37,6 +37,7 @@
         <svg id="one" width="300" height="300">
         </svg>
         <script type="text/javascript">
+
             // http://www.redblobgames.com/grids/hexagons/
             // to draw a hexagon, we need a center pos (x, y) and size (distance from center to corner)
             // for each corner i
@@ -55,95 +56,7 @@
             
                 return snap.polygon(points).attr('class', 'hexagon');
             }
-
             var s1 = Snap('#one');
-            hex(150, 150, 100, s1);
-        </script>
-
-        <svg id="two" width="300" height="300">
-        </svg>
-        <script type="text/javascript">
-            var s2 = Snap('#two');
-            
-            var size = 50;
-            var width = size * 2;
-            var height = Math.sqrt(3)/2 * width;
-
-            var centerX = centerY = 150;
-            var hex00 = hex(150, 150, size, s2);
-            var hex10 = hex(150 + width * 0.75, 150 + height/2, size, s2);
-        </script>
-
-        <svg id="three" width="300" height="300">
-        </svg>
-        <script type="text/javascript">
-            var s3 = Snap('#three');
-            
-            var size = 50;
-            var width = size * 2;
-            var height = Math.sqrt(3)/2 * width;
-
-            var centerX = centerY = 150;
-            var hex00 = hex(150, 150, size, s3);
-
-            /*
-            var coordinateMap = {
-                'n': [0,-1],
-                'ne': [1,-1],
-                'se': [1,0],
-                's': [0,1],
-                'sw': [-1,1],
-                'nw': [-1,0]
-            };
-            */
-
-            function position (coordinate, x0, y0, w, h) {
-                var x, y;
-
-                switch (coordinate) {
-                    case 'se': x = x0 + w * 0.75; y = y0 + h * 0.5;
-                    break;
-                    case 's': x = x0; y = y0 + h;
-                    break;
-                    case 'sw': x = x0 - w * 0.75; y = y0 + h * 0.5;
-                    break;
-                    case 'nw': x = x0 - w * 0.75; y = y0 - h * 0.5;
-                    break;
-                    case 'n': x = x0; y = y0 - h;
-                    break;
-                    case 'ne': x = x0 + w * 0.75; y = y0 - h * 0.5;
-                    break;
-                }
-
-                return {
-                    x: x,
-                    y: y
-                };
-            }
-
-            var hexSEPos = position('se', 150, 150, width, height);
-            var hexSE = hex(hexSEPos.x, hexSEPos.y, size, s3);
-
-            var hexSPos = position('s', 150, 150, width, height);
-            var hexS = hex(hexSPos.x, hexSPos.y, size, s3);
-
-            var hexSWPos = position('sw', 150, 150, width, height);
-            var hexSW = hex(hexSWPos.x, hexSWPos.y, size, s3);
-
-            var hexNWPos = position('nw', 150, 150, width, height);
-            var hexNW = hex(hexNWPos.x, hexNWPos.y, size, s3);
-
-            var hexNPos = position('n', 150, 150, width, height);
-            var hexN = hex(hexNPos.x, hexNPos.y, size, s3);
-
-            var hexNEPos = position('ne', 150, 150, width, height);
-            var hexNE = hex(hexNEPos.x, hexNEPos.y, size, s3);
-        </script>
-
-        <svg id="four" width="300" height="300">
-        </svg>
-        <script type="text/javascript">
-            var s4 = Snap('#four');
             
             var size = 20;
             var centerX = centerY = 150;
@@ -151,7 +64,7 @@
             hexGrid(centerX, centerY, size, 2);
 
             function hexGrid (x0, y0, size, depth) {
-                var center = hex(x0, y0, size, s4);
+                var center = hex(x0, y0, size, s1);
                 var coordinates = ['n', 'ne', 'se', 's', 'sw', 'nw'];
 
                 var width = size * 2;
@@ -160,7 +73,7 @@
                 for (var i = 1; i <= depth; i++) {
                     coordinates.forEach(function (coordinate) {
                         var hexPos = position(coordinate, x0, y0, width, height, i);
-                        hex(hexPos.x, hexPos.y, size, s4);
+                        hex(hexPos.x, hexPos.y, size, s1);
                     });    
                 }
                 
