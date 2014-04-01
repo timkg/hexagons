@@ -34,6 +34,8 @@
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
 
+        <img src="images/axialHexGrid.png" />
+
         <svg id="one" width="300" height="300">
         </svg>
         <script type="text/javascript">
@@ -56,52 +58,40 @@
             
                 return snap.polygon(points).attr('class', 'hexagon');
             }
+
+            function hexAtCoordinates (x0, y0, q, r) {
+                var hexPos = position(x0, y0, size, q, r);
+                hex(hexPos.x, hexPos.y, size, s1);
+            }
+
             var s1 = Snap('#one');
             
             var size = 20;
             var centerX = centerY = 150;
             
-            hexGrid(centerX, centerY, size, 2);
+            
+            hexGrid(centerX, centerY, 3);
 
-            function hexGrid (x0, y0, size, depth) {
-                var center = hex(x0, y0, size, s1);
-                var coordinates = ['n', 'ne', 'se', 's', 'sw', 'nw'];
-
-                var width = size * 2;
-                var height = Math.sqrt(3)/2 * width;
-
-                for (var i = 1; i <= depth; i++) {
-                    coordinates.forEach(function (coordinate) {
-                        var hexPos = position(coordinate, x0, y0, width, height, i);
-                        hex(hexPos.x, hexPos.y, size, s1);
-                    });    
+            function hexGrid (x0, y0, size) {    
+                for (var q = -size; q <= size; q++) {
+                    for (var r = -size; r <= size; r++) {
+                        var z = -q-r;
+                        if (Math.abs(q) <= size && Math.abs(r) <= size && Math.abs(z) <= size) {
+                            hexAtCoordinates(x0, y0, q, r)
+                        }
+                    }
                 }
-                
             }
-
-            function position (coordinate, x0, y0, w, h, distanceFromCenter) {
+            
+            function position (x0, y0, size, q, r) {
                 var deltaX, deltaY;
 
-                switch (coordinate) {
-                    case 'se':  deltaX = w * 0.75;  deltaY = h * 0.5;
-                    break;
-                    case 's':   deltaX = 0;         deltaY = h;
-                    break;
-                    case 'sw':  deltaX = w * -0.75; deltaY = h * 0.5;
-                    break;
-                    case 'nw':  deltaX = w * -0.75; deltaY = h * -0.5;
-                    break;
-                    case 'n':   deltaX = 0;         deltaY = h * -1;
-                    break;
-                    case 'ne':  deltaX = w * 0.75;  deltaY = h * -0.5;
-                    break;
-                }
-
-
+                deltaX = size * 3/2 * q;
+                deltaY = size * Math.sqrt(3) * (r + q/2);
 
                 return {
-                    x: x0 + deltaX * distanceFromCenter,
-                    y: y0 + deltaY * distanceFromCenter
+                    x: x0 + deltaX,
+                    y: y0 + deltaY
                 };
             }
         </script>
