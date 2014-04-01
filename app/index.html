@@ -86,6 +86,7 @@
             var centerX = centerY = 150;
             var hex00 = hex(150, 150, size, s3);
 
+            /*
             var coordinateMap = {
                 'n': [0,-1],
                 'ne': [1,-1],
@@ -94,22 +95,15 @@
                 'sw': [-1,1],
                 'nw': [-1,0]
             };
+            */
 
             function position (coordinate, x0, y0, w, h) {
-                var coordinateSign = coordinateMap[coordinate];
                 var x, y;
-                
-                switch (coordinateSign[0]) {
-                    case 1: x = x0 + w * 0.75;
-                    break;
-                    case 0: x = x0 ;
-                    break;
-                }
 
-                switch (coordinateSign[1]) {
-                    case 1: y = y0 + h;
+                switch (coordinate) {
+                    case 'se': x = x0 + w * 0.75; y = y0 + h * 0.5;
                     break;
-                    case 0: y = y0 + h * 0.5;
+                    case 's': x = x0; y = y0 + h;
                     break;
                 }
 
@@ -119,11 +113,11 @@
                 };
             }
 
-            var hex10Position = position('se', 150, 150, width, height);
-            var hex10 = hex(hex10Position.x, hex10Position.y, size, s3);
+            var hexSEPos = position('se', 150, 150, width, height);
+            var hexSE = hex(hexSEPos.x, hexSEPos.y, size, s3);
 
-            var hex01Position = position('s', 150, 150, width, height);
-            var hex01 = hex(hex01Position.x, hex01Position.y, size, s3);
+            var hexSPos = position('s', 150, 150, width, height);
+            var hexS = hex(hexSPos.x, hexSPos.y, size, s3);
         </script>
 </body>
 </html>
