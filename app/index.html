@@ -56,8 +56,23 @@
                 return snap.polygon(points).attr('class', 'hexagon');
             }
 
-            var s = Snap('#one');
-            hex(150, 150, 100, s);
+            var s1 = Snap('#one');
+            hex(150, 150, 100, s1);
+        </script>
+
+        <svg id="two" width="300" height="300">
+        </svg>
+        <script type="text/javascript">
+            var s2 = Snap('#two');
+            
+            var size = 50;
+            var width = size * 2;
+            var height = Math.sqrt(3)/2 * width;
+
+            var centerX = centerY = 150;
+            var hex00 = hex(150, 150, size, s2);
+            var hex10 = hex(150 + width * 0.75, 150 + height/2, size, s2);
+
         </script>
 </body>
 </html>
