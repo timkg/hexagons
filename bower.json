@@ -1,0 +1,9 @@
+{
+  "name": "hexagons",
+  "private": true,
+  "dependencies": {
+    "jquery": "~1.10.2",
+    "snap.svg": "~0.2.0"
+  },
+  "devDependencies": {}
+}
