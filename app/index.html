@@ -23,8 +23,6 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-
-
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="bower_components/jquery/jquery.js"></script>
@@ -35,5 +33,28 @@
         <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
+
+        <svg id="one" width="300" height="300">
+        </svg>
+        <script type="text/javascript">
+            // to draw a hexagon, we need a center pos (x, y) and size (distance from center to corner)
+            // for each corner i
+            // xi = x + size * cos(angle)
+            // yi = y + size * sin(angle)
+            // angle = 2 * PI / 6 * i
+            var size = 100, x = 150, y = 150;
+            var pointString = '';
+            var points = [];
+            for (var i = 0; i < 6; i++) {
+                var angle = 2 * Math.PI / 6 * i;
+                xi = x + size * Math.cos(angle);
+                yi = y + size * Math.sin(angle);
+                pointString += xi + ',' + yi + ' ';
+                points.push(xi);
+                points.push(yi);
+            }
+            var s = Snap('#one');
+            var hex = s.polygon(points).attr('class', 'hexagon');
+        </script>
 </body>
 </html>
