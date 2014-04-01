@@ -17,7 +17,7 @@ function HexGrid (x0, y0, hexSize, size, snap) {
 
 HexGrid.prototype.addHex = function (q, r) {
     var hexPos = this.position(q, r);
-    var hex = new Hex(hexPos.x, hexPos.y, this.hexSize, this.snap, this);
+    var hex = new Hex(hexPos.x, hexPos.y, this.hexSize, this.snap, this, q, r);
     this.hexes[q + ',' + r] = hex;
     hex.draw();
 };
@@ -34,23 +34,68 @@ HexGrid.prototype.position = function (q, r) {
     };
 }
 
-function Hex (x, y, size, snap, grid) {
+HexGrid.prototype.at = function (q, r) {
+    return this.hexes[q + ',' + r];
+}
+
+HexGrid.prototype.neighboursFor = function (q, r) {
+    var neighborCoordinates = [
+       [+1,  0], [+1, -1], [ 0, -1],
+       [-1,  0], [-1, +1], [ 0, +1]
+    ];
+
+    var requester = this.at(q, r);
+    var neighbours = [];
+
+    neighborCoordinates.forEach(function (coordinates) {
+        var q = requester.q + coordinates[0];
+        var r = requester.r + coordinates[1];
+
+        var neighbour = this.at(q, r);
+        if (neighbour) neighbours.push(neighbour)
+    }, this);
+
+    return neighbours;
+}
+
+function Hex (x, y, size, snap, grid, q, r) {
     this.x = x;
     this.y = y;
     this.size = size;
     this.snap = snap;
     this.grid = grid;
-}
+    this.q = q;
+    this.r = r;
 
-Hex.prototype.draw = function () {
-    var points = [], xi, yi;
+    this.corners = [];
+    var xi, yi;
     for (var i = 0; i < 6; i++) {
         var angle = 2 * Math.PI / 6 * i;
         xi = this.x + this.size * Math.cos(angle);
         yi = this.y + this.size * Math.sin(angle);
-        points.push(xi);
-        points.push(yi);
+        this.corners.push(xi);
+        this.corners.push(yi);
     }
+}
 
-    this.snap.polygon(points).attr('class', 'hexagon');
+Hex.prototype.draw = function () {
+    this.el = this.snap.polygon(this.corners).attr('class', 'hexagon');
+    this.el.mouseover(this.activateNeighbours.bind(this));
+    this.el.mouseout(this.deactivateNeighbours.bind(this));
+}
+
+Hex.prototype.activateNeighbours = function () {
+    this.el.attr('fill', '#aaa')
+    var neighbours = this.grid.neighboursFor(this.q, this.r);
+    neighbours.forEach(function (hex) {
+        hex.el.attr('fill', '#ccc')
+    })
+}
+
+Hex.prototype.deactivateNeighbours = function () {
+    this.el.attr('fill', '#efefef')
+    var neighbours = this.grid.neighboursFor(this.q, this.r);
+    neighbours.forEach(function (hex) {
+        hex.el.attr('fill', '#efefef')
+    })
 }
